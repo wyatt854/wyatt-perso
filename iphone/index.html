@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet iPhone 15 Pro - Wyatt</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #f5f5f7;
+            --text-muted: #86868b;
+            --accent-color: #2997ff;
+            --nav-bg: rgba(0, 0, 0, 0.8);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #e8e8ed;
+        }
+
+        .nav-logo { font-weight: 700; letter-spacing: 1px; }
+
+        /* SECTIONS */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 24px 60px 24px;
+        }
+
+        /* TYPO */
+        h1 {
+            font-size: clamp(2.4rem, 8vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            margin: 0 0 20px 0;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: clamp(1.9rem, 6vw, 3.5rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin: 0 0 20px 0;
+            line-height: 1.15;
+        }
+
+        h3 {
+            font-size: clamp(1.4rem, 4vw, 2.5rem);
+            font-weight: 600;
+            margin: 0 0 15px 0;
+        }
+
+        p {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .highlight { color: #ffffff; }
+        .accent { color: var(--accent-color); }
+
+        /* MEDIA */
+        img {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            margin: 40px 0;
+            border-radius: 20px;
+            display: block;
+        }
+
+        video {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            margin: 40px 0;
+            border-radius: 20px;
+            display: block;
+            background: #000;
+        }
+
+        .media-wrap {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .media-placeholder {
+            border: 2px dashed #424245;
+            padding: 60px 30px;
+            margin: 40px 0;
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .card {
+            background-color: #111111;
+            padding: 32px;
+            border-radius: 25px;
+            text-align: left;
+        }
+
+        .card h4 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .card p {
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            margin: 0;
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* DELIVERY BOX */
+        .delivery-box {
+            background: linear-gradient(135deg, #2997ff, #0066cc);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 30px;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 600;
+            margin-top: 40px;
+            display: inline-block;
+        }
+
+        .small-text {
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            margin-top: 20px;
+            color: var(--text-muted);
+        }
+
+        /* BADGE */
+        .badge {
+            display: inline-block;
+            background: rgba(41, 151, 255, 0.15);
+            color: var(--accent-color);
+            border: 1px solid rgba(41,151,255,0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* STATS ROW */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .stat-block {
+            background: #111;
+            border-radius: 20px;
+            padding: 28px 32px;
+            text-align: center;
+            flex: 1 1 140px;
+            min-width: 120px;
+        }
+
+        .stat-block .stat-num {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-block .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            max-width: 700px;
+            width: 100%;
+            margin: 50px auto 0;
+            text-align: left;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 22px; top: 0; bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, #2997ff 0%, transparent 100%);
+        }
+
+        .tl-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            align-items: flex-start;
+        }
+
+        .tl-dot {
+            width: 44px; height: 44px;
+            flex-shrink: 0;
+            background: #1c1c1e;
+            border: 1px solid #333;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            position: relative; z-index: 1;
+        }
+
+        .tl-content { flex: 1; padding-top: 4px; }
+
+        .tl-year {
+            font-size: 12px; color: #2997ff;
+            font-weight: 600; letter-spacing: 0.06em;
+            text-transform: uppercase; margin-bottom: 4px;
+        }
+
+        .tl-title {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: 600; color: #f5f5f7;
+            margin-bottom: 6px;
+        }
+
+        .tl-desc {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+            max-width: none;
+        }
+
+        /* CHAT BULLES */
+        .chat-wrap {
+            max-width: 600px;
+            width: 100%;
+            margin: 40px auto 0;
+            text-align: left;
+        }
+
+        .chat-label {
+            font-size: 12px; color: #48484a;
+            margin-bottom: 6px;
+            letter-spacing: 0.03em;
+        }
+
+        .question-bubble {
+            background: #1c1c1e;
+            border: 1px solid #2c2c2e;
+            border-radius: 20px 20px 20px 4px;
+            padding: 16px 22px;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: #f5f5f7;
+            margin-bottom: 12px;
+        }
+
+        .answer-bubble {
+            background: #2997ff;
+            border-radius: 20px 20px 4px 20px;
+            padding: 16px 22px;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* COMPARE TABLE */
+        .compare-wrap {
+            width: 100%;
+            max-width: 820px;
+            overflow-x: auto;
+            margin-top: 50px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 480px;
+        }
+
+        .compare-table th {
+            padding: 16px 20px;
+            font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #86868b;
+            border-bottom: 1px solid #1d1d1f;
+        }
+
+        .compare-table th.winner {
+            color: #f5f5f7;
+            background: rgba(41,151,255,0.08);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .compare-table td {
+            padding: 14px 20px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            text-align: center;
+            border-bottom: 1px solid #1d1d1f;
+            color: #86868b;
+        }
+
+        .compare-table td.winner { background: rgba(41,151,255,0.04); color: #f5f5f7; }
+        .compare-table td.label { text-align: left; color: #f5f5f7; font-weight: 500; }
+        .check { color: #30d158; }
+        .cross { color: #ff453a; }
+
+        /* FOOTER */
+        footer {
+            background-color: #111111;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+        }
+
+        footer p {
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 500px) {
+            .nav-content { font-size: 0.8rem; }
+            .section { padding: 90px 16px 50px 16px; }
+            .card { padding: 24px 20px; }
+            .stat-block { padding: 20px; }
+            .delivery-box { padding: 16px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="nav-content">
+            <span class="nav-logo">Projet de Wyatt</span>
+            <span>Objectif : iPhone 15 Pro</span>
+        </div>
+    </header>
+
+    <!-- SECTION 1 : INTRODUCTION -->
+    <section class="section">
+        <div class="fade-in">
+            <div class="badge">La proposition officielle</div>
+            <h1>Parlons sérieusement.</h1>
+            <p class="highlight" style="font-size: clamp(1.2rem, 3.5vw, 2rem);">Papa, Belle-maman, bienvenue.</p>
+            <p>J'ai créé ce site pour vous exposer clairement un projet qui me tient à cœur : <span class="highlight">passer à l'iPhone 15 Pro en revendant mon iPhone 13.</span></p>
+            <p>L'idée n'est <span class="highlight">pas de vous demander de payer</span>, mais d'obtenir votre accord pour réaliser cette opération de manière responsable et transparente. Je vais tout vous expliquer, point par point, sans rien cacher.</p>
+            <div class="media-wrap">
+                <img src="hero-iphone15pro.jpg" alt="iPhone 15 Pro" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2 : RÉVOLUTION PRO + DYNAMIC ISLAND + VIDÉO -->
+    <section class="section" style="background-color: #050505;">
+        <div class="fade-in">
+            <div class="badge">Depuis l'iPhone 14 Pro</div>
+            <h2>La révolution a commencé<br>avec l'iPhone 14.</h2>
+            <p>Depuis le modèle 14 Pro, Apple a tout réinventé d'un coup. Trois innovations majeures ont changé la donne et font que la gamme <span class="highlight">Pro n'a plus rien à voir</span> avec un iPhone classique.</p>
+
+            <!-- VIDÉO DYNAMIC ISLAND -->
+            <div class="media-wrap">
+                <video src="dynamic-island.mp4" autoplay muted loop playsinline
+                    onerror="this.outerHTML='<div class=media-placeholder>[Vidéo dynamic-island.mp4 introuvable — place-la dans le même dossier que ce fichier HTML]</div>'">
+                </video>
+            </div>
+
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot">🏝️</div>
+                    <div class="tl-content">
+                        <div class="tl-year">Nouveauté #1 — Dynamic Island</div>
+                        <div class="tl-title">Fini l'encoche. Bonjour l'île.</div>
+                        <p class="tl-desc">Le Dynamic Island remplace l'encoche par une zone interactive et vivante. Elle affiche vos notifications, votre musique en cours, un timer, une course Uber, le niveau de batterie des AirPods… Le tout de façon fluide, animée, sans interrompre ce que vous faites. C'est une interface entièrement nouvelle. Mon iPhone 13 ? Il a encore l'ancienne encoche fixe d'il y a 5 ans.</p>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot">🌙</div>
+                    <div class="tl-content">
+                        <div class="tl-year">Nouveauté #2 — Always-On Display</div>
+                        <div class="tl-title">L'écran qui ne dort jamais.</div>
+                        <p class="tl-desc">L'heure, la date, vos widgets, vos notifications — visibles en permanence sans toucher l'écran, en consommant très peu de batterie. Extrêmement pratique au quotidien. Impossible sur mon 13.</p>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot">⚡</div>
+                    <div class="tl-content">
+                        <div class="tl-year">Nouveauté #3 — Puce nouvelle génération</div>
+                        <div class="tl-title">Une puissance sans commune mesure.</div>
+                        <p class="tl-desc">La puce A16 Bionic du 14 Pro était déjà un bond énorme. Avec le 15 Pro et son A17 Pro, on passe à la première puce 3 nanomètres jamais fabriquée pour un smartphone. Fluidité, gaming, photo, vidéo : tout est dans une autre catégorie.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3 : POURQUOI PAS LE 14 PRO -->
+    <section class="section">
+        <div class="fade-in">
+            <div class="badge">La question logique</div>
+            <h2>"Mais pourquoi pas le 14 Pro ?"</h2>
+            <p>C'est la bonne question. Le 14 Pro a lancé la révolution, c'est vrai. Mais le 15 Pro franchit plusieurs caps supplémentaires qui font toute la différence — et justifient ce choix précis.</p>
+
+            <div class="grid">
+                <div class="card fade-in">
+                    <h4>⚖️ Titane chirurgical</h4>
+                    <p>Le 14 Pro était en acier inoxydable, lourd et froid. Le 15 Pro passe au <span class="highlight">titane grade 5</span> — le même matériau que les navettes spatiales et les implants médicaux. Résultat : <span class="highlight">19 grammes de moins</span>. En main, on le sent vraiment.</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>🔋 Bien meilleure autonomie</h4>
+                    <p>Grâce à la puce A17 Pro plus efficace, le 15 Pro tient <span class="highlight">jusqu'à 29h de lecture vidéo</span> contre 23h pour le 14 Pro. Concrètement : une journée entière et plus sans se retrouver à 3% dans le bus. Je serai toujours joignable.</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>📸 Photos professionnelles</h4>
+                    <p>Nouveau capteur principal 48 MP avec un Photonic Engine encore amélioré. Les photos de nuit, de portrait et d'action sont dans une autre dimension par rapport au 14 Pro. Et face à mon 13, c'est le jour et la nuit.</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>🔌 USB-C universel</h4>
+                    <p>Fini le câble Lightning propriétaire. Le 15 Pro passe à l'<span class="highlight">USB-C avec vitesse USB 3</span> — le même câble que tout le reste. Et les transferts de vidéos sont 10x plus rapides. Le 14 Pro n'a même pas l'USB-C.</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>⚡ Puce A17 Pro — 3nm</h4>
+                    <p>La <span class="highlight">première puce gravée en 3 nanomètres</span> au monde sur un smartphone. Plus rapide, plus économe en énergie, capable de faire tourner des jeux console en qualité ray tracing. Ce n'est pas une mise à jour, c'est une nouvelle génération.</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>🔘 Le Bouton Action</h4>
+                    <p>Exclusif au 15 Pro. Un bouton physique <span class="highlight">entièrement programmable</span> — que le 14 Pro n'a pas. Je vous explique en détail juste après pourquoi c'est important pour vous aussi.</p>
+                </div>
+            </div>
+
+            <!-- Tableau comparatif -->
+            <div class="compare-wrap fade-in">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;color:#f5f5f7;">Caractéristique</th>
+                            <th>iPhone 13</th>
+                            <th>14 Pro</th>
+                            <th class="winner">15 Pro ⭐</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="label">Dynamic Island</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td class="winner"><span class="check">✓</span></td></tr>
+                        <tr><td class="label">Always-On Display</td><td><span class="cross">✕</span></td><td><span class="check">✓</span></td><td class="winner"><span class="check">✓</span></td></tr>
+                        <tr><td class="label">Puce 3nm</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td class="winner"><span class="check">✓</span></td></tr>
+                        <tr><td class="label">Titane (léger)</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td class="winner"><span class="check">✓</span></td></tr>
+                        <tr><td class="label">Bouton Action</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td class="winner"><span class="check">✓</span></td></tr>
+                        <tr><td class="label">USB-C</td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td class="winner"><span class="check">✓</span></td></tr>
+                        <tr><td class="label">Autonomie vidéo</td><td>19h</td><td>23h</td><td class="winner">29h 🔥</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4 : BOUTON ACTION -->
+    <section class="section" style="background-color: #111111;">
+        <div class="fade-in">
+            <div class="badge">Exclusif iPhone 15 Pro</div>
+            <h2>Le Bouton Action.</h2>
+            <h3 class="highlight">Un raccourci pour ma sécurité — et votre tranquillité.</h3>
+            <p>Adieu le simple bouton silencieux. L'iPhone 15 Pro intègre un <span class="highlight">Bouton Action entièrement programmable</span> sur le côté. Une pression longue, il fait exactement ce qu'on lui demande.</p>
+
+            <div class="grid" style="max-width: 800px;">
+                <div class="card fade-in">
+                    <h4>🆘 SOS instantané vers vous</h4>
+                    <p>Je programme le bouton pour <span class="highlight">envoyer un message d'urgence automatique</span> à Papa et Belle-maman avec ma localisation GPS en temps réel. Un seul geste, même si j'ai les mains occupées, même si l'écran est verrouillé. Je suis en galère ? Boum. Vous savez où je suis.</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>📸 Autres usages pratiques</h4>
+                    <p>Photo instantanée sans déverrouiller. Lampe torche ultra-rapide. Mode silencieux en 1 geste. Traduction en direct. Ou n'importe quel raccourci personnalisé. C'est un outil qui <span class="highlight">s'adapte à ma vie</span>.</p>
+                </div>
+            </div>
+
+            <div class="media-wrap" style="margin-top: 30px;">
+                <img src="action-button.jpg" alt="Bouton Action iPhone 15 Pro" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5 : PLAN FINANCIER -->
+    <section class="section">
+        <div class="fade-in">
+            <div class="badge">Le plan financier</div>
+            <h2>Le Plan d'Action.</h2>
+            <p>Un achat réfléchi, financé par moi, chez <span class="highlight">Pixmania</span> — leader européen du reconditionné depuis 2001.</p>
+
+            <div class="media-wrap">
+                <img src="pixmania-offre.png" alt="Offre Pixmania" onerror="this.style.display='none'">
+            </div>
+
+            <p class="highlight" style="font-size: clamp(1.4rem, 4vw, 2rem);">10,50€ / mois pendant 48 mois.</p>
+            <p>Je prends ces <span class="highlight">10,50€ directement sur mon argent de poche</span> chaque mois. Vous ne déboursez rien sur la durée. Le téléphone est proposé en <span class="highlight">très bon état avec 2 ans de garantie incluse</span> — aussi fiable qu'un neuf, bien moins cher.</p>
+
+            <div class="stats-row fade-in">
+                <div class="stat-block">
+                    <div class="stat-num">10,50€</div>
+                    <div class="stat-label">par mois</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-num">48</div>
+                    <div class="stat-label">mois</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-num">2 ans</div>
+                    <div class="stat-label">de garantie</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-num" style="color:#30d158;">0€</div>
+                    <div class="stat-label">pour vous</div>
+                </div>
+            </div>
+
+            <div class="card fade-in" style="margin-top: 30px; background-color: #1d1d1f; max-width: 700px; width: 100%;">
+                <h4 style="text-align: center;">🔄 Le Bonus Papa</h4>
+                <p style="text-align: center;">48 mois ça paraît long — mais c'est un investissement familial. Quand dans quelques années je changerai de téléphone, <span class="highlight">Papa récupère l'iPhone 15 Pro</span>. Et à ce moment-là, il sera toujours un téléphone puissant, en titane, avec garantie. Pas mal pour un téléphone qu'il n'aura pas payé.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6 : POURQUOI VOUS DEMANDER -->
+    <section class="section" style="background-color: #050505;">
+        <div class="fade-in">
+            <div class="badge">La vraie question</div>
+            <h2>Pourquoi vous demander<br>si c'est moi qui paye ?</h2>
+            <p>Bonne question. Si je peux le financer seul à 10,50€/mois, pourquoi ce site ? Deux raisons honnêtes.</p>
+
+            <div class="grid">
+                <div class="card fade-in">
+                    <h4>1. Par principe</h4>
+                    <p>C'est une décision importante qui engage plusieurs années. Je veux agir de manière <span class="highlight">transparente et mature</span> avec vous. Vous méritez de comprendre le projet, de poser vos questions, et de valider. Ce n'est pas une cachotterie — c'est une marque de respect.</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>2. La caution de 180€</h4>
+                    <p>Pour la location avec option d'achat, Pixmania demande une <span class="highlight">empreinte bancaire de 180€</span>. C'est uniquement une garantie temporaire. Dès que je leur envoie mon iPhone 13 en retour après réception du 15 Pro, <span class="highlight">les 180€ sont immédiatement débloqués</span>. Vous ne perdez pas cet argent — il vous revient.</p>
+                </div>
+            </div>
+
+            <!-- FAQ BULLES -->
+            <div class="chat-wrap fade-in">
+                <p class="chat-label">Papa / Belle-maman :</p>
+                <div class="question-bubble">C'est trop cher, 48 mois c'est très long !</div>
+                <p class="chat-label" style="text-align:right;">Moi :</p>
+                <div class="answer-bubble">10,50€ par mois, c'est exactement ce que je gère avec mon argent de poche. Vous ne payez rien. Et dans 4 ans, Papa a un iPhone 15 Pro gratuit entre les mains.</div>
+
+                <p class="chat-label">Papa / Belle-maman :</p>
+                <div class="question-bubble">Et si tu n'arrives plus à payer un mois ?</div>
+                <p class="chat-label" style="text-align:right;">Moi :</p>
+                <div class="answer-bubble">Je prévois de couvrir ça avec mon argent de poche. Et si vraiment un mois est difficile, je récupère sur le suivant. C'est moins de 35 centimes par jour — je gère.</div>
+
+                <p class="chat-label">Papa / Belle-maman :</p>
+                <div class="question-bubble">Pourquoi Pixmania ? C'est sérieux comme site ?</div>
+                <p class="chat-label" style="text-align:right;">Moi :</p>
+                <div class="answer-bubble">Pixmania existe depuis 2001 — c'est un des géants du reconditionné en Europe. 2 ans de garantie incluse, état "très bon". Aussi fiable qu'un achat neuf, juste moins cher.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7 : COUNTDOWN & CONCLUSION -->
+    <section class="section">
+        <div class="fade-in">
+            <div class="badge">Si vous acceptez aujourd'hui</div>
+            <h2>Le timing est parfait.</h2>
+            <p>Si vous donnez votre accord aujourd'hui, je commande immédiatement. Et je reçois mon téléphone le :</p>
+            <h1 class="highlight">06 / 05 / 2026</h1>
+            <p>Le compte à rebours tourne déjà.</p>
+
+            <div class="delivery-box fade-in">
+                <span id="countdown">Calcul en cours...</span>
+            </div>
+
+            <p class="small-text">Alors, on valide le projet ?</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Créateur du site : <span class="highlight">LAPAILLERIE-ENGONE Wyatt</span></p>
+        <p>Fait pour convaincre les meilleurs parents du monde. ❤️</p>
+    </footer>
+
+    <script>
+        // SCROLL ANIMATIONS
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { root: null, rootMargin: '0px', threshold: 0.15 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // COUNTDOWN
+        function updateCountdown() {
+            const delivery = new Date('2026-05-06T09:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = delivery - now;
+            const el = document.getElementById('countdown');
+
+            if (diff <= 0) {
+                el.innerHTML = "C'est aujourd'hui ! 🎉";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            if (days > 0) {
+                el.innerHTML = `soit dans ${days} jour${days > 1 ? 's' : ''}, ${hours}h ${minutes}m ${String(seconds).padStart(2,'0')}s`;
+            } else if (hours > 0) {
+                el.innerHTML = `soit dans ${hours}h ${minutes}m ${String(seconds).padStart(2,'0')}s`;
+            } else {
+                el.innerHTML = `soit dans ${minutes}m ${String(seconds).padStart(2,'0')}s`;
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+
+</body>
+</html>
